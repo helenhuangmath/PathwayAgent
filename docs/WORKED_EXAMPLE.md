@@ -6,11 +6,11 @@ package at `pathwayagent.examples.interferon`.
 
 ## Install and build the library
 
-Download the wheel from the [v0.1.0 GitHub release](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v0.1.0), then:
+Download the wheel from the [v1.0.1 GitHub release](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1), then:
 
 ```bash
 python3.12 -m venv .venv
-.venv/bin/python -m pip install ./pathwayagent-0.1.0-py3-none-any.whl
+.venv/bin/python -m pip install ./pathwayagent-1.0.1-py3-none-any.whl
 export PATHWAYAGENT_LIBRARY="$PWD/library"
 export PATHWAYAGENT_RESULTS="$PWD/results"
 export MPLCONFIGDIR="$PWD/.mplconfig"

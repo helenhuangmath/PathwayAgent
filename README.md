@@ -31,7 +31,7 @@ pair exceeds about 0.33, which is why a cross-tool consensus is needed at all.*
 More figures, with explanations, are in `TUTORIAL.md`. The images are 300-dpi renders; the vector PDF of
 each sits beside it in `docs/figures/`.
 
-PathwayAgent is alpha-stage research software. The core package is usable, tested offline, and documented,
+PathwayAgent is research software. The core package is usable, tested offline, and documented,
 but the public repository should keep generated libraries, result folders, and local virtual environments
 out of Git.
 
@@ -186,7 +186,7 @@ See [testing/README.md](testing/README.md) for the folder guide; the active Pyth
 
 If PathwayAgent contributes to a publication, please cite it (see `CITATION.cff`):
 
-> Huang H. PathwayAgent: fast multi-tool pathway analysis with cross-tool consensus. Version 0.1.0, 2026.
+> Huang H. PathwayAgent: fast multi-tool pathway analysis with cross-tool consensus. Version 1.0.1, 2026.
 
 `methods.txt` in every run folder gives a ready-made methods paragraph with the versions and citations of the
 underlying tools and databases.

@@ -40,7 +40,7 @@ This file tracks the work needed to make PathwayAgent feel like a mature, reusab
 
 ### Stable
 
-- Public API is documented in `docs/PYTHON_API.md` (alpha contract; may change before 1.0).
+- Public API is documented in `docs/PYTHON_API.md` (versioned API reference).
 - Versioning follows semantic versioning.
 - Releases include changelog entries.
 - Citation metadata is complete (`CITATION.cff` added; add a DOI once archived on Zenodo).

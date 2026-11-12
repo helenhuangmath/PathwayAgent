@@ -1,6 +1,6 @@
 [project]
 name = "pathwayagent"
-version = "0.1.0"
+version = "1.0.1"
 description = "Fast multi-tool pathway analysis with cross-tool consensus scoring"
 readme = "README.md"
 license = "MIT"
@@ -13,7 +13,6 @@ dependencies = [
   "jinja2", "pyyaml", "fastapi", "uvicorn[standard]", "python-multipart", "blitzgsea",
 ]
 classifiers = [
-  "Development Status :: 3 - Alpha",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Healthcare Industry",
   "Operating System :: OS Independent",

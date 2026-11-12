@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1] - 2026-11-12
+
+Published release version: `v1.0.1`. Package metadata, citation, Python API documentation,
+and installation examples use the same version.
+
 ### Added
 
 - Multi-tool pathway analysis pipeline.

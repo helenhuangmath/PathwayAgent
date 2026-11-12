@@ -1,7 +1,7 @@
-# Python API (v0.1.0)
+# Python API (v1.0.1)
 
-PathwayAgent is alpha research software. These are the supported entry points for this release;
-their signatures may change before 1.0. Python 3.11 or newer is required.
+This reference documents the supported Python API for PathwayAgent v1.0.1.
+Python 3.11 or newer is required.
 
 ## Minimal analysis
 

@@ -1,6 +1,6 @@
 # Releasing PathwayAgent
 
-The first packaged release is v0.1.0, an alpha research release. A GitHub release does not change
+The current release version is v1.0.1. Publish it as a regular GitHub release. A GitHub release does not change
 repository visibility and does not publish to PyPI.
 
 ## Prepare and verify
@@ -32,13 +32,13 @@ commit. Do not overwrite an existing release/tag. Prepare release notes describi
 commands, validation results, and limitations. From the repository checkout:
 
 ```bash
-git tag -a v0.1.0 -m "PathwayAgent v0.1.0"
-git push origin main v0.1.0
-gh release create v0.1.0 --verify-tag --prerelease --title "PathwayAgent v0.1.0 (alpha)" \
+git tag -a v1.0.1 -m "PathwayAgent v1.0.1"
+git push origin main v1.0.1
+gh release create v1.0.1 --verify-tag --title "PathwayAgent v1.0.1" \
   --notes-file /path/to/release-notes.md \
-  /path/to/pathwayagent-0.1.0-py3-none-any.whl \
-  /path/to/pathwayagent-0.1.0.tar.gz \
-  /path/to/interferon-example-v0.1.0.zip \
+  /path/to/pathwayagent-1.0.1-py3-none-any.whl \
+  /path/to/pathwayagent-1.0.1.tar.gz \
+  /path/to/interferon-example-v1.0.1.zip \
   /path/to/SHA256SUMS
 ```
 

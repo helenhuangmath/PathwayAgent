@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use PathwayAgent, please cite it as below."
 type: software
 title: "PathwayAgent: fast multi-tool pathway analysis with cross-tool consensus"
-version: 0.1.0
+version: 1.0.1
 date-released: 2026-11-12
 license: MIT
 authors:
