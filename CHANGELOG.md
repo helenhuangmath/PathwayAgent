@@ -1,7 +1,5 @@
 # Changelog
 
-## [1.0.1] - 2026-11-12
-
 Published release version: `v1.0.1`. Package metadata, citation, Python API documentation,
 and installation examples use the same version.
 
@@ -12,7 +10,9 @@ and installation examples use the same version.
 - Cross-tool consensus scoring, theme grouping, key-gene ranking, figures, HTML report, CLI, REST API, and local web app.
 - Offline unit and validation tests.
 - Bundled example inputs in the web app ("Or load test data" menu), served from `/examples`.
-- Example figures and captions in README and TUTORIAL (`docs/figures/`, 300-dpi PNG plus PDF).
+- Example figures and captions in README and TUTORIAL (`docs/figures/`, 300-dpi PNG).
+- Documentation site (MkDocs Material) with introduction, quick start, tutorial, user guide and Python API,
+  deployed to GitHub Pages by `.github/workflows/docs.yml`.
 
 ### Changed
 - Repository split into `github_repo/` (code, tests, docs, small example data) and a sibling `large_data/` folder (gene-set library, results, build artifacts, browser-prototype databases); `pathwayagent.config` finds the sibling automatically, or use `PATHWAYAGENT_DATA`.
