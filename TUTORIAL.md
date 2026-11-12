@@ -106,7 +106,7 @@ PDF of every figure. The files behind it are in one folder per list:
 | `key_genes.tsv` | genes ranked by their weight across themes |
 | `results.xlsx` | the three tables above plus one sheet per tool |
 | `id_mapping.tsv` | what each input gene was mapped to |
-| `figures/*.pdf` | vector figures, 7.2 in wide, Arial, 9–10 pt text; a `.png` preview sits next to each. The figures shown in this tutorial are 300-dpi copies in `docs/figures/`, each with its PDF beside it |
+| `figures/*.pdf` | vector figures, 7.2 in wide, Arial, 9–10 pt text; a `.png` preview sits next to each. The figures shown in this tutorial are 300-dpi copies in `docs/figures/` |
 
 The figures, in the order you would usually read them:
 

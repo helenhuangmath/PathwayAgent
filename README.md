@@ -1,8 +1,14 @@
 # PathwayAgent
 
+Current formal release: [v1.0.1](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1).
+Installable packages, a worked example, and checksums are attached to the release.
+
 Fast pathway analysis that runs several enrichment tools at once and combines them into a cross-tool
 consensus: robust themes, key genes, and figures ready for publication.
 A worked example on real data (three CD8 T cell gene modules, with Metascape) is in `TUTORIAL.md`.
+
+**Documentation: <https://helenhuangmath.github.io/PathwayAgent/>** (introduction, installation, tutorial,
+user guide and Python API).
 
 ## What it produces
 
@@ -28,8 +34,8 @@ interferon γ response are Hallmark sets, so only Local ORA and Enrichr can see 
 Aurkb and Mad2l1 drive the mitotic themes). Right: Jaccard overlap of each tool's significant terms. No
 pair exceeds about 0.33, which is why a cross-tool consensus is needed at all.*
 
-More figures, with explanations, are in `TUTORIAL.md`. The images are 300-dpi renders; the vector PDF of
-each sits beside it in `docs/figures/`.
+More figures, with explanations, are in `TUTORIAL.md`. The images in `docs/figures/` are 300-dpi renders;
+every run writes a vector PDF beside each figure.
 
 PathwayAgent is research software. The core package is usable, tested offline, and documented,
 but the public repository should keep generated libraries, result folders, and local virtual environments
@@ -165,7 +171,7 @@ outputs should be attached to releases rather than committed to Git.
 
 ## Tests
 
-Test code, example inputs, and archived prototypes are grouped under `testing/`.
+Test code and example inputs are grouped under `testing/`.
 See [testing/README.md](testing/README.md) for the folder guide; the active Python tests are in `testing/unit/`, `testing/validation/`, and `testing/live/`.
 
 ```bash
@@ -179,8 +185,10 @@ See [testing/README.md](testing/README.md) for the folder guide; the active Pyth
   development the repository lives in `PathwayAgent/github_repo/` with the large library, results and build
   files in the sibling `PathwayAgent/large_data/`.
 - CI runs linting, package build checks and the offline test suite.
-- `CONTRIBUTING.md`, `CHANGELOG.md` and `docs/REPOSITORY_HEALTH.md` track the remaining work needed for a
-  stable public release.
+- The documentation site is built from `docs/` with MkDocs (`mkdocs.yml`) and deployed to GitHub Pages by
+  `.github/workflows/docs.yml`. Preview it locally with `pip install -e ".[docs]"` and `mkdocs serve`.
+  `TUTORIAL.md` and `CHANGELOG.md` are pulled into the site at build time, so edit them in place.
+- `CHANGELOG.md` and `docs/RELEASING.md` describe published changes and release procedures.
 
 ## Citation
 

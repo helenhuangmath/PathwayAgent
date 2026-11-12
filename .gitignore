@@ -11,6 +11,9 @@ dist/
 .coverage
 htmlcov/
 
+# Built documentation site (mkdocs build)
+site/
+
 # Local environments
 .venv/
 venv/
@@ -29,9 +32,6 @@ env/
 results/
 library/
 large_data/
-# Browser-prototype databases (~23 MB) are symlinks into ../large_data/
-testing/browser_prototype/data
-testing/browser_prototype/data_source
 *.sqlite
 *.sqlite3
 *.rds

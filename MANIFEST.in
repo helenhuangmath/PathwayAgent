@@ -7,8 +7,9 @@ recursive-include pathwayagent/server/static *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 include CHANGELOG.md
-include CONTRIBUTING.md
 include pyproject.toml
-recursive-include docs *.md
+include mkdocs.yml
+include mkdocs_hooks.py
+recursive-include docs *.md *.css *.png
 recursive-include testing *.py *.txt *.csv
 include testing/README.md

@@ -1,7 +1,9 @@
 # Releasing PathwayAgent
 
-The current release version is v1.0.1. Publish it as a regular GitHub release. A GitHub release does not change
-repository visibility and does not publish to PyPI.
+The current formal release is [v1.0.1](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1).
+It is published as a regular GitHub release. A GitHub release does not change repository visibility
+and does not publish to PyPI. The commands below show the v1.0.1 procedure; substitute a new version
+for future releases rather than attempting to recreate an existing tag or release.
 
 ## Prepare and verify
 
