@@ -45,6 +45,7 @@ nav:
   - Installation: INSTALL.md
   - Quick start: quickstart.md
   - Tutorial: tutorial.md
+  - Launch web app: launch.md
   - User guide:
       - Inputs and command line: usage.md
       - Tools and presets: tools.md
@@ -74,6 +75,8 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.superfences
   - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/extra.css

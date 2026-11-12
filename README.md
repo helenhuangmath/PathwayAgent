@@ -1,14 +1,19 @@
 # PathwayAgent
 
-Current formal release: [v1.0.1](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1).
-Installable packages, a worked example, and checksums are attached to the release.
+PathwayAgent is a pathway enrichment tool for gene lists, ranked lists and differential-expression tables
+(mouse and human). It runs up to 14 enrichment tools at once (local engines, Enrichr, g:Profiler, Reactome,
+STRING, clusterProfiler, fgsea, Metascape) and combines their results into a cross-tool consensus: robust
+themes, key genes, and figures ready for publication.
 
-Fast pathway analysis that runs several enrichment tools at once and combines them into a cross-tool
-consensus: robust themes, key genes, and figures ready for publication.
+- **Website and documentation:** <https://helenhuangmath.github.io/PathwayAgent/> (introduction, installation,
+  tutorial, user guide and Python API)
+- **Web app:** <https://helenhuangmath.github.io/PathwayAgent/launch/> opens PathwayAgent in your browser. The
+  app runs on your own computer; start it by double-clicking `PathwayAgent.command` (macOS) or with
+  `python -m pathwayagent serve`.
+- **Release:** [v1.0.1](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1), with installable
+  packages, a worked example, and checksums attached.
+
 A worked example on real data (three CD8 T cell gene modules, with Metascape) is in `TUTORIAL.md`.
-
-**Documentation: <https://helenhuangmath.github.io/PathwayAgent/>** (introduction, installation, tutorial,
-user guide and Python API).
 
 ## What it produces
 
@@ -89,7 +94,7 @@ See `docs/INSTALL.md` for a reproducible install checklist.
 .venv/bin/python -m pathwayagent run lists.csv --metascape metascape_all.zip   # add a Metascape result as a tool
 .venv/bin/python -m pathwayagent tools                               # list tools and presets
 
-# local web app (http://127.0.0.1:8765) and REST API
+# local web app (http://127.0.0.1:8765) and REST API; on macOS, double-clicking PathwayAgent.command does the same
 .venv/bin/python -m pathwayagent serve      # the page has an "Or load test data" menu with bundled example lists
 
 # REST API example

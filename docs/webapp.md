@@ -2,6 +2,9 @@
 
 ## Web app
 
+The [Launch web app](launch.md) page opens the app when it is running, and on macOS
+`PathwayAgent.command` starts it with a double-click. From a terminal:
+
 ```bash
 pathwayagent serve                      # opens http://127.0.0.1:8765
 pathwayagent serve --port 9000 --no-browser
@@ -27,7 +30,7 @@ The web app is a client of this API, so anything it does can be scripted.
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/api/v1/health` | Liveness and version. |
+| `GET` | `/api/v1/health` | Liveness and version. The only endpoint readable from other websites; the launch page uses it. |
 | `GET` | `/api/v1/options` | Organisms, databases, tools, presets and defaults. |
 | `POST` | `/api/v1/jobs` | Start a job from JSON. Returns `{"job_id": ...}`. |
 | `POST` | `/api/v1/jobs/upload` | Start a job from an uploaded file (`file`, plus `params` as a JSON string). |

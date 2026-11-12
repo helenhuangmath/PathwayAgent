@@ -13,6 +13,9 @@ and installation examples use the same version.
 - Example figures and captions in README and TUTORIAL (`docs/figures/`, 300-dpi PNG).
 - Documentation site (MkDocs Material) with introduction, quick start, tutorial, user guide and Python API,
   deployed to GitHub Pages by `.github/workflows/docs.yml`.
+- "Launch web app" page on the documentation site that detects a locally running PathwayAgent and opens it,
+  and `PathwayAgent.command`, a double-click launcher (macOS) that installs on first use and starts the web app.
+  The health endpoint is readable cross-origin for this purpose; no other endpoint is.
 
 ### Changed
 - Repository split into `github_repo/` (code, tests, docs, small example data) and a sibling `large_data/` folder (gene-set library, results, build artifacts, browser-prototype databases); `pathwayagent.config` finds the sibling automatically, or use `PATHWAYAGENT_DATA`.

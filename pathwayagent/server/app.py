@@ -7,7 +7,7 @@ Local web app + REST API (design §13.1-13.2).
   GET  /api/v1/jobs/{id}        status, per-tool progress, results summary when done
   GET  /api/v1/jobs/{id}/events Server-Sent Events stream of progress
   GET  /api/v1/options          organisms, databases, tools, presets
-  GET  /api/v1/health
+  GET  /api/v1/health           also readable cross-origin (used by the docs site's launch page)
   GET  /results/<run>/...       every output file (report.html, TSV, figures)
 """
 from __future__ import annotations
@@ -24,7 +24,7 @@ from typing import Optional
 
 import pandas as pd
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -155,9 +155,22 @@ def index():
     return FileResponse(STATIC / "index.html")
 
 
+# The documentation site's "Launch web app" page asks this endpoint whether PathwayAgent is running
+# on the visitor's machine. Only the health check is readable from other origins; it reveals the
+# version and nothing else. The private-network header answers the browser's preflight for a public
+# page contacting localhost.
+_HEALTH_CORS = {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, OPTIONS",
+                "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Private-Network": "true"}
+
+
 @app.get("/api/v1/health")
 def health():
-    return {"ok": True, "version": __version__}
+    return JSONResponse({"ok": True, "version": __version__}, headers=_HEALTH_CORS)
+
+
+@app.options("/api/v1/health")
+def health_preflight():
+    return Response(status_code=204, headers=_HEALTH_CORS)
 
 
 @app.get("/api/v1/options")

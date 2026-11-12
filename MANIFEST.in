@@ -10,6 +10,7 @@ include CHANGELOG.md
 include pyproject.toml
 include mkdocs.yml
 include mkdocs_hooks.py
+include PathwayAgent.command
 recursive-include docs *.md *.css *.png
 recursive-include testing *.py *.txt *.csv
 include testing/README.md
