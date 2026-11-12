@@ -1,11 +1,107 @@
-/* Figures: centred, with a light frame so white-background plots read on the dark theme too. */
+/* GEPIA / Bootswatch Flatly palette: navy, turquoise, white and pale gray. */
+:root {
+  --gepia-navy: #2c3e50;
+  --gepia-turquoise: #18bc9c;
+}
+
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--gepia-navy);
+  --md-primary-fg-color--light: #3d566e;
+  --md-primary-fg-color--dark: #1a242f;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #dce4ec;
+  --md-accent-fg-color: var(--gepia-turquoise);
+  --md-accent-fg-color--transparent: #18bc9c1a;
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-fg-color: #2c3e50;
+  --md-default-fg-color--light: #526778;
+  --md-default-fg-color--lighter: #71828e;
+  --md-default-fg-color--lightest: #dce4ec;
+  --md-default-bg-color: #ffffff;
+  --md-typeset-color: #2c3e50;
+  /* Darker than the turquoise accent so body links are readable on white. */
+  --md-typeset-a-color: #0f806b;
+  --md-code-fg-color: #2c3e50;
+  --md-code-bg-color: #f2f5f6;
+  --gepia-link-hover: #0a6654;
+  --gepia-panel-bg: #ecf0f1;
+  --gepia-table-heading: #2c3e50;
+  --gepia-table-heading-text: #ffffff;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 210;
+  --md-default-bg-color: #1a242f;
+  --md-default-fg-color: #e5edf2;
+  --md-default-fg-color--light: #b5c5d2;
+  --md-default-fg-color--lightest: #3d5163;
+  --md-typeset-color: #e5edf2;
+  --md-typeset-a-color: #54ddc1;
+  --md-code-fg-color: #e5edf2;
+  --md-code-bg-color: #243443;
+  --gepia-link-hover: #8cebd7;
+  --gepia-panel-bg: #243443;
+  --gepia-table-heading: #2c3e50;
+  --gepia-table-heading-text: #ffffff;
+}
+
+.md-header {
+  border-bottom: 3px solid var(--gepia-turquoise);
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus-visible,
+.md-nav__link:hover,
+.md-nav__link:focus-visible {
+  color: var(--gepia-link-hover);
+}
+
+.md-nav__link--active {
+  color: var(--md-typeset-a-color);
+  font-weight: 700;
+}
+
+.md-typeset .md-button {
+  border-radius: 4px;
+}
+
+.md-typeset .md-button--primary {
+  background-color: var(--gepia-navy);
+  border-color: var(--gepia-navy);
+  color: #ffffff;
+}
+
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus-visible {
+  background-color: #0f806b;
+  border-color: #0f806b;
+  color: #ffffff;
+}
+
+.md-typeset table:not([class]) {
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--gepia-table-heading);
+  color: var(--gepia-table-heading-text);
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: var(--gepia-panel-bg);
+}
+
+/* Keep white-background scientific plots readable in either color scheme. */
 .md-typeset img {
   display: block;
   margin: 0.6em auto;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: 4px;
 }
-.md-typeset table:not([class]) { font-size: 0.72rem; }
+
 /* Two figures side by side in a table: let the columns share the width. */
 .md-typeset table:not([class]) td img { margin: 0; }
