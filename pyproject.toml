@@ -1,0 +1,61 @@
+[project]
+name = "pathwayagent"
+version = "0.1.0"
+description = "Fast multi-tool pathway analysis with cross-tool consensus scoring"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Hua Huang", email = "helenhuang.math@gmail.com"}]
+maintainers = [{name = "Hua Huang", email = "helenhuang.math@gmail.com"}]
+requires-python = ">=3.11"
+dependencies = [
+  "numpy", "scipy", "pandas", "pyarrow", "matplotlib", "networkx", "requests", "openpyxl",
+  "jinja2", "pyyaml", "fastapi", "uvicorn[standard]", "python-multipart", "blitzgsea",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Healthcare Industry",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx", "build", "twine", "ruff"]
+
+[project.urls]
+Homepage = "https://github.com/helenhuangmath/PathwayAgent"
+Documentation = "https://github.com/helenhuangmath/PathwayAgent/blob/main/docs/PYTHON_API.md"
+Issues = "https://github.com/helenhuangmath/PathwayAgent/issues"
+Source = "https://github.com/helenhuangmath/PathwayAgent"
+
+[project.scripts]
+pathwayagent = "pathwayagent.cli:main"
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["pathwayagent*"]
+
+[tool.setuptools.package-data]
+pathwayagent = ["rworker/*.R", "server/static/*", "server/static/examples/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["testing/unit", "testing/validation", "testing/live"]
+markers = [
+  "live: calls external web services (Enrichr, g:Profiler, Reactome, STRING)",
+  "r: needs Rscript with clusterProfiler/fgsea",
+  "slow: takes more than ~20 s",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["F"]

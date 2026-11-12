@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pathway Quick-Run — tiny test</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Arial, sans-serif; margin: 24px; color: #1d2330; background: #fff; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { color: #555; margin: 0 0 16px; }
+  #summary { font-size: 18px; font-weight: 600; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+  .allpass { background: #e3f5e6; color: #146c2e; }
+  .somefail { background: #fde6e6; color: #a1131a; }
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { border: 1px solid #d5d9e0; padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3f5f8; }
+  .PASS { color: #146c2e; font-weight: 700; }
+  .FAIL { color: #a1131a; font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>Pathway Quick-Run: tiny test</h1>
+<p>Runs the hand-worked test case from SPEC.md through the same engine the app uses and compares every answer (to 4 significant figures).</p>
+<div id="summary">Running…</div>
+<table>
+  <thead><tr><th>Row</th><th>Group</th><th>What is checked</th><th>Expected (by hand)</th><th>App got</th><th>Result</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+
+<script src="engine.js"></script>
+<script src="test_case/toy_database.js"></script>
+<script src="test_case/input.js"></script>
+<script src="test_case/expected_answers.js"></script>
+<script>
+(function () {
+  const sig4 = v => Number(v).toPrecision(4);
+  const sameList = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const list = a => a.length ? a.join(", ") : "(none)";
+
+  const lib = PQ.parseGMT(TOY_DATABASE);
+  lib.db = "TOY";
+  const groups = PQ.parseGroupsText(TINY_INPUT);
+  const results = PQ.runAll(groups, [lib], PQ.recognisedFor([lib]));
+
+  const out = [];
+  for (const e of EXPECTED_ANSWERS) {
+    const g = results.find(r => r.name === e.group);
+    let what, exp, got, pass;
+    if (!g) {
+      what = "group exists"; exp = e.group; got = "group missing"; pass = false;
+    } else if (e.check === "warnings") {
+      const w = g.warnings, n = g.perDb[0].n;
+      what = "Warnings and number of genes used (n)";
+      exp = `Excel-mangled: ${list(e.excel)}; unrecognised: ${list(e.unrecognised)}; duplicates: ${list(e.duplicates)}; n = ${e.n}`;
+      got = `Excel-mangled: ${list(w.excel)}; unrecognised: ${list(w.unrecognised)}; duplicates: ${list(w.duplicates)}; n = ${n}`;
+      pass = sameList(w.excel, e.excel) && sameList(w.unrecognised, e.unrecognised) &&
+             sameList(w.duplicates, e.duplicates) && n === e.n;
+    } else if (e.notShown) {
+      const r = g.rows.find(x => x.pathway === e.pathway);
+      what = e.pathway + " (0 hits)";
+      exp = "not shown";
+      got = r ? `shown (k=${r.k})` : "not shown";
+      pass = !r;
+    } else {
+      const r = g.rows.find(x => x.pathway === e.pathway);
+      what = e.pathway;
+      exp = `k/K = ${e.k}/${e.K}; P = ${sig4(e.p)}; FDR = ${sig4(e.fdr)}`;
+      if (!r) { got = "not shown"; pass = false; }
+      else {
+        got = `k/K = ${r.k}/${r.K}; P = ${sig4(r.p)}; FDR = ${sig4(r.fdr)}`;
+        pass = r.k === e.k && r.K === e.K && sig4(r.p) === sig4(e.p) && sig4(r.fdr) === sig4(e.fdr);
+      }
+    }
+    out.push({ row: e.row, group: e.group, what, exp, got, pass });
+  }
+
+  const tbody = document.getElementById("rows");
+  for (const o of out) {
+    const tr = document.createElement("tr");
+    [o.row, o.group, o.what, o.exp, o.got].forEach(v => {
+      const td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
+    });
+    const td = document.createElement("td");
+    td.textContent = o.pass ? "PASS" : "FAIL"; td.className = o.pass ? "PASS" : "FAIL";
+    tr.appendChild(td); tbody.appendChild(tr);
+  }
+  const nPass = out.filter(o => o.pass).length;
+  const s = document.getElementById("summary");
+  s.textContent = nPass === out.length ? `All ${out.length} checks PASS` : `${out.length - nPass} of ${out.length} checks FAIL`;
+  s.className = nPass === out.length ? "allpass" : "somefail";
+  document.title = s.textContent + " — Pathway Quick-Run test";
+})();
+</script>
+</body>
+</html>

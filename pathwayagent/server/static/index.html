@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PathwayAgent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic|Open+Sans:300,400&display=swap" rel="stylesheet">
+<style>
+/* Theme: flat, Bootstrap-3 "Flatly" palette — dark slate navbar, teal links, white panels */
+:root{--navy:#2c3e50;--navy-dark:#1a242f;--teal:#18bc9c;--teal-dark:#128f76;--blue:#3498db;--orange:#f39c12;
+--red:#e74c3c;--grey:#95a5a6;--grey-2:#b4bcc2;--line:#ecf0f1;--line-2:#dddddd;--bg:#ffffff;--ink:#2c3e50}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;padding-top:60px;background:var(--bg);color:var(--ink);font:15px/1.42857 "Lato","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--teal);text-decoration:none}a:hover{color:var(--teal-dark);text-decoration:underline}
+h1,h2,h3,h4{font-weight:400;line-height:1.1;margin:20px 0 10px}h1{font-size:39px}h2{font-size:32px}h3{font-size:26px}h4{font-size:19px}
+code{padding:2px 4px;font-size:90%;color:#c7254e;background:#f9f2f4;border-radius:4px;font-family:Menlo,Monaco,Consolas,monospace}
+/* navbar */
+.navbar{position:fixed;top:0;left:0;right:0;height:60px;background:var(--navy);z-index:1030;box-shadow:0 1px 0 var(--navy-dark)}
+.navbar .container{display:flex;align-items:center;height:60px}
+.navbar-brand{color:#fff;font-size:19px;padding:0 15px;line-height:60px;white-space:nowrap}
+.navbar-brand:hover{color:#18bc9c;text-decoration:none}
+.navbar-nav{display:flex;margin:0 0 0 auto;padding:0;list-style:none}
+.navbar-nav a{display:block;color:#fff;padding:0 15px;line-height:60px}
+.navbar-nav a:hover{background:var(--navy-dark);color:#18bc9c;text-decoration:none}
+.navbar-nav .new{color:var(--red);font-weight:700;font-size:12px}
+/* layout */
+.container{width:100%;max-width:1170px;margin:0 auto;padding:0 15px}
+.wordmark{text-align:center;padding:34px 0 10px}
+.wordmark .mark{display:inline-block;text-align:left}
+.wordmark .name{font-family:"Open Sans","Lato",Helvetica,Arial,sans-serif;font-weight:300;font-size:72px;letter-spacing:-1px;color:#111;line-height:1}
+.wordmark .name b{font-weight:400}
+.wordmark .rule{border-top:1px solid #555;margin:6px 0 4px}
+.wordmark .tag{font-family:"Open Sans","Lato",Helvetica,Arial,sans-serif;font-weight:300;font-size:20px;color:#333}
+.helix{vertical-align:-14px;margin-right:12px}
+/* pills */
+.nav-pills{display:flex;flex-wrap:wrap;gap:2px;list-style:none;padding:0;margin:24px 0 0}
+.nav-pills button,.nav-pills a{border:0;background:none;color:var(--teal);padding:10px 15px;border-radius:4px;font:inherit;cursor:pointer;line-height:1.42857}
+.nav-pills button:hover,.nav-pills a:hover{background:var(--line);text-decoration:none}
+.nav-pills button.active,.nav-pills a.active{background:var(--navy);color:#fff}
+/* panels */
+.panel{background:#fff;border:1px solid var(--line);border-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.05);margin-bottom:21px}
+.panel-heading{background:var(--line);color:var(--navy);padding:10px 15px;border-bottom:1px solid var(--line);border-radius:3px 3px 0 0;font-size:17px}
+.panel-body{padding:15px}
+.tab-content>.panel{border-top-left-radius:0}
+.help-block{display:block;margin:5px 0 10px;color:var(--grey-2);font-size:13px}
+/* forms */
+label{display:block;font-weight:700;font-size:15px;margin:10px 0 5px}
+textarea,select,input[type=number],input[type=text]{display:block;width:100%;height:45px;padding:10px 15px;font:inherit;font-size:15px;
+color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:4px;box-shadow:none;transition:border-color .15s}
+textarea{height:auto;min-height:170px;font-family:Menlo,Monaco,Consolas,monospace;font-size:13px;line-height:1.4}
+textarea:focus,select:focus,input:focus{outline:0;border-color:var(--navy)}
+input[type=file]{margin-top:6px;font-size:14px}
+fieldset{border:1px solid var(--line);border-radius:4px;margin:12px 0;padding:8px 12px}
+legend{font-size:14px;color:var(--navy);font-weight:700;padding:0 5px}
+.chk{display:flex;align-items:center;gap:7px;font-weight:400;margin:4px 0;font-size:14px}
+.row{display:flex;gap:15px}.row>div{flex:1}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+details>summary{cursor:pointer;color:var(--teal);margin:12px 0 4px}
+.btn{display:inline-block;padding:10px 15px;font:inherit;font-size:15px;line-height:1.42857;border:1px solid transparent;border-radius:4px;cursor:pointer;color:#fff;text-align:center}
+.btn-primary{background:var(--navy);border-color:var(--navy)}.btn-primary:hover{background:var(--navy-dark)}
+.btn-xs{padding:1px 5px;font-size:12px;border-radius:3px}
+.btn-success{background:var(--teal);border-color:var(--teal)}.btn-success:hover{background:var(--teal-dark)}
+.btn-default{background:var(--grey);border-color:var(--grey)}.btn-default:hover{background:#798d8f}
+.btn:disabled{opacity:.65;cursor:wait}
+.btn-lg{padding:18px 27px;font-size:19px;border-radius:6px}
+.run-row{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.muted{color:var(--grey-2);font-size:13px}
+/* results */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border-radius:4px;padding:3px 9px;font-size:12px;background:var(--grey);color:#fff}
+.chip.ok{background:var(--teal)}.chip.error,.chip.timeout{background:var(--red)}.chip.skipped,.chip.empty{background:var(--grey-2)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:0}
+th,td{padding:8px;line-height:1.42857;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+thead th{border-top:0;border-bottom:2px solid var(--line);color:var(--navy)}
+tbody tr:nth-child(odd){background:#f9f9f9}tbody tr:hover{background:var(--line)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{max-height:480px;overflow:auto;border:1px solid var(--line);border-radius:4px}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.b1{background:var(--navy)}.b2{background:var(--teal)}.b3{background:var(--grey)}
+.genes{color:#7b8a8b;font-size:12px}
+.alert{padding:12px 15px;border:1px solid transparent;border-radius:4px;margin:8px 0;font-size:14px;color:#fff}
+.alert-warning{background:var(--orange)}.alert-danger{background:var(--red)}.alert-info{background:var(--blue)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px;background:#fff}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:15px;margin-top:12px}
+.empty{color:var(--grey-2);padding:30px 0;text-align:center}
+.q h2{font-size:19px;background:var(--line);color:var(--navy);padding:10px 15px;border-radius:4px;margin:24px 0 10px}
+.list-group-item{display:block;padding:10px 15px;border:1px solid var(--line);margin-bottom:-1px;color:var(--ink)}
+.list-group-item:first-child{border-radius:4px 4px 0 0}.list-group-item:last-child{border-radius:0 0 4px 4px;margin-bottom:0}
+.list-group-item h4{margin:0 0 4px;font-size:17px;color:var(--navy)}.list-group-item p{margin:0;font-size:14px;color:#7b8a8b}
+/* footer */
+.footer-border{margin-top:30px;border-top:1px dashed var(--line-2)}
+.footer-copyright{margin:15px 0 30px;line-height:24px;text-align:right;font-size:14px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}.wordmark .name{font-size:44px}
+.navbar-nav a{padding:0 9px;font-size:13px}.wordmark .tag{font-size:15px}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="container">
+  <a class="navbar-brand" href="#">PathwayAgent</a>
+  <ul class="navbar-nav">
+    <li><a href="#analysis">Analysis</a></li>
+    <li><a href="#" id="nav-example">Example</a></li>
+    <li><a href="/docs" target="_blank">API</a></li>
+    <li><a href="#help">Help</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</div></nav>
+
+<div class="container">
+  <div class="wordmark"><div class="mark">
+    <div class="name"><svg class="helix" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M14 4c0 14 36 14 36 28S14 46 14 60" fill="none" stroke="#2c3e50" stroke-width="5" stroke-linecap="round"/>
+      <path d="M50 4c0 14-36 14-36 28s36 18 36 28" fill="none" stroke="#18bc9c" stroke-width="5" stroke-linecap="round"/>
+      <path d="M20 14h24M17 24h30M17 40h30M20 50h24" stroke="#2c3e50" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+    </svg>Pathway<b>Agent</b></div>
+    <div class="rule"></div>
+    <div class="tag">Multi-tool Pathway Analysis with Cross-tool Consensus</div>
+  </div></div>
+
+  <ul class="nav-pills" id="pills">
+    <li><button class="active" data-pane="analysis">Gene List Analysis</button></li>
+    <li><button data-pane="help">Input Format &amp; Help</button></li>
+    <li><button data-pane="about">About</button></li>
+  </ul>
+
+  <div class="tab-content">
+  <!-- ANALYSIS -->
+  <div class="panel pane" id="analysis"><div class="panel-body">
+    <div class="cols">
+      <div>
+        <h4 style="margin-top:0">Enter gene list(s):</h4>
+        <span class="help-block">One gene per line, a gene + score table, a DE table, or several named columns.</span>
+        <textarea id="genes" placeholder="e.g. Tox
+Pdcd1
+Havcr2
+…  — or paste a table with a header row"></textarea>
+        <input type="file" id="file" accept=".txt,.csv,.tsv,.rnk,.xlsx">
+        <label for="example">Or load test data</label>
+        <select id="example"><option value="">choose an example…</option></select>
+        <div class="muted" id="example-note"></div>
+        <div class="run-row">
+          <button class="btn btn-primary btn-lg" id="run">Run analysis</button>
+          <span class="muted">Local results arrive in seconds; web and R tools stream in as they finish.</span>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div><label for="organism">Organism</label><select id="organism"><option value="auto">auto-detect</option></select></div>
+          <div><label for="preset">Preset</label><select id="preset"></select></div>
+        </div>
+        <fieldset><legend>Methods &amp; tools</legend><div id="tools"></div></fieldset>
+        <fieldset><legend>Databases</legend><div id="dbs"></div></fieldset>
+        <details><summary>Background &amp; advanced options</summary>
+          <label for="universe">Background universe (recommended: detected genes)</label>
+          <textarea id="universe" style="min-height:80px" placeholder="optional — paste all detected genes"></textarea>
+          <div class="row">
+            <div><label for="min">Min size</label><input type="number" id="min"></div>
+            <div><label for="max">Max size</label><input type="number" id="max"></div>
+            <div><label for="alpha">FDR</label><input type="number" id="alpha" step="0.01"></div>
+          </div>
+          <div class="row"><div><label for="deadline">Deadline (s)</label><input type="number" id="deadline"></div><div></div><div></div></div>
+          <label class="chk" style="margin-top:10px"><input type="checkbox" id="local"> Local only (never send genes to web services)</label>
+          <label for="goi">Genes of interest (highlight only)</label>
+          <input type="text" id="goi" placeholder="Tox, Tcf7, Pdcd1">
+        </details>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- HELP -->
+  <div class="panel pane" id="help" style="display:none"><div class="panel-body">
+    <h4 style="margin-top:0">Input formats are detected automatically</h4>
+    <div class="list-group">
+      <div class="list-group-item"><h4>Gene list</h4><p>One gene per line. Runs the over-representation tools (Local ORA, Enrichr, g:Profiler, Reactome, STRING, clusterProfiler, ReactomePA, Metascape).</p></div>
+      <div class="list-group-item"><h4>Ranked list</h4><p>Two columns, gene and score (for example a Wald statistic). Adds the rank-based tools: mHG, pre-ranked GSEA, Wilcoxon, fgsea, g:Profiler ordered.</p></div>
+      <div class="list-group-item"><h4>DE table</h4><p>Columns gene, log2FoldChange, pvalue. Genes are ranked by signed −log10 p.</p></div>
+      <div class="list-group-item"><h4>Several lists</h4><p>Several columns under a header row, one list per column. The header is recognised by a header word (gene, module, cluster, list, set, up, down) or by names on a shared stem such as TEX_G1, TEX_G2.</p></div>
+    </div>
+    <h4>Reading the results</h4>
+    <p>Terms are matched across tools and scored 0–100. <span class="badge b1">ROBUST</span> terms are significant in at least two tools and
+    two method families; <span class="badge b2">SUPPORTED</span> terms in at least two tools; <span class="badge b3">SINGLE-TOOL</span> terms in one.
+    Terms are grouped into themes by shared hit genes, and key genes are ranked by their weight across themes.</p>
+    <p>Command line: <code>python -m pathwayagent run genes.txt</code> · REST: <code>POST /api/v1/jobs</code> (<a href="/docs" target="_blank">interactive API docs</a>).</p>
+  </div></div>
+
+  <!-- ABOUT -->
+  <div class="panel pane" id="about" style="display:none"><div class="panel-body">
+    <h3 style="margin-top:0">PathwayAgent</h3>
+    <p>PathwayAgent runs several pathway-enrichment tools at once (local hypergeometric and rank tests, Enrichr, g:Profiler, Reactome, STRING,
+    clusterProfiler, ReactomePA, fgsea, and Metascape result packages) on GO, KEGG, Reactome, WikiPathways, MSigDB Hallmark and DisGeNET, and
+    combines them into a cross-tool consensus: robust themes, key genes and publication-ready figures.</p>
+    <p>Developed by Hua Huang, Berger and Wherry labs, University of Pennsylvania. Released under the MIT License.</p>
+    <h4>How to cite</h4>
+    <p>Huang H. PathwayAgent: fast multi-tool pathway analysis with cross-tool consensus. Version <span id="ver">0.1.0</span>, 2026.</p>
+    <h4>Contact</h4>
+    <p>Questions and bug reports: <a href="mailto:helenhuang.math@gmail.com">helenhuang.math@gmail.com</a></p>
+    <h4>Acknowledgement</h4>
+    <p>Gene sets from MSigDB, Gene Ontology, KEGG, Reactome, WikiPathways and DisGeNET; enrichment services from Enrichr, g:Profiler, Reactome and STRING;
+    R packages clusterProfiler, ReactomePA and fgsea.</p>
+  </div></div>
+  </div>
+
+  <div id="main"></div>
+
+  <div class="footer-border"></div>
+  <div class="footer-copyright">Copyright © 2026 Hua Huang. PathwayAgent is released under the MIT License.</div>
+</div>
+
+<script>
+let OPT=null,EXAMPLES=[],EXNAME=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function pane(name){document.querySelectorAll('.pane').forEach(p=>p.style.display=p.id===name?'block':'none');
+  document.querySelectorAll('#pills button').forEach(b=>b.classList.toggle('active',b.dataset.pane===name));}
+document.querySelectorAll('#pills button').forEach(b=>b.onclick=()=>pane(b.dataset.pane));
+document.querySelectorAll('.navbar-nav a[href^="#"]').forEach(a=>a.onclick=e=>{const t=a.getAttribute('href').slice(1);
+  if(['analysis','help','about'].includes(t)){e.preventDefault();pane(t);window.scrollTo({top:0,behavior:'smooth'});}});
+async function init(){
+  OPT=await (await fetch('/api/v1/options')).json();
+  try{const h=await (await fetch('/api/v1/health')).json();if(h.version)$('ver').textContent=h.version;}catch(e){}
+  for(const [k,v] of Object.entries(OPT.organisms))$('organism').innerHTML+=`<option value="${k}">${esc(v)}</option>`;
+  $('preset').innerHTML=Object.keys(OPT.presets).map(p=>`<option value="${p}">${p}</option>`).join('')+'<option value="custom">custom</option>';
+  $('preset').value='standard';
+  const fam={};for(const [n,t] of Object.entries(OPT.tools))(fam[t.family]??=[]).push([n,t]);
+  let h='';for(const [f,list] of Object.entries(fam)){h+=`<div class="muted" style="margin-top:4px">${esc(OPT.families[f]||f)}</div>`;
+    for(const [n,t] of list)h+=`<label class="chk" title="${esc(t.method)}"><input type="checkbox" name="tool" value="${n}"> ${n}
+      <span class="badge ${t.web?'b2':'b3'}" style="font-weight:400">${t.web?'web':'local'}</span></label>`;}
+  $('tools').innerHTML=h;
+  $('dbs').innerHTML=Object.entries(OPT.databases).map(([k,v])=>`<label class="chk"><input type="checkbox" name="db" value="${k}"
+    ${OPT.default_databases.includes(k)?'checked':''}> ${esc(v)}</label>`).join('');
+  $('min').value=OPT.defaults.min_size;$('max').value=OPT.defaults.max_size;$('alpha').value=OPT.defaults.alpha;
+  $('deadline').value=OPT.defaults.deadline_s;
+  applyPreset();$('preset').onchange=applyPreset;
+  document.querySelectorAll('input[name=tool]').forEach(c=>c.onchange=()=>$('preset').value='custom');
+  $('file').onchange=async e=>{const f=e.target.files[0];if(f&&!f.name.endsWith('.xlsx'))$('genes').value=await f.text();};
+  $('run').onclick=run;
+  try{EXAMPLES=await (await fetch('/examples/examples.json')).json();
+    $('example').innerHTML+=EXAMPLES.map((e,i)=>`<option value="${i}">${esc(e.label)}</option>`).join('');
+    $('example').onchange=loadExample;}catch(e){for(const id of ['example','example-note'])$(id).style.display='none';document.querySelector('label[for=example]').style.display='none';}
+  $('nav-example').onclick=e=>{e.preventDefault();pane('analysis');if(EXAMPLES.length){$('example').value='0';loadExample();}window.scrollTo({top:0,behavior:'smooth'});};
+  $('genes').oninput=()=>{EXNAME=null;$('example').value='';$('example-note').textContent='';};
+}
+async function loadExample(){
+  const e=EXAMPLES[$('example').value];
+  if(!e){EXNAME=null;$('example-note').textContent='';return;}
+  const r=await fetch('/examples/'+e.file);
+  if(!r.ok){alert('Could not load '+e.file);return;}
+  $('file').value='';
+  $('genes').value=await r.text();
+  EXNAME=e.file.replace(/\.[^.]+$/,'');
+  $('example-note').textContent=e.note||'';
+}
+function applyPreset(){const p=OPT.presets[$('preset').value];if(!p)return;
+  document.querySelectorAll('input[name=tool]').forEach(c=>c.checked=p.includes(c.value));}
+async function run(){
+  const f=$('file').files[0];
+  const params={organism:$('organism').value,
+    tools:[...document.querySelectorAll('input[name=tool]:checked')].map(c=>c.value),
+    databases:[...document.querySelectorAll('input[name=db]:checked')].map(c=>c.value),
+    universe:$('universe').value||null,min_size:+$('min').value,max_size:+$('max').value,alpha:+$('alpha').value,
+    deadline_s:+$('deadline').value,local_only:$('local').checked,
+    genes_of_interest:$('goi').value.split(/[\s,;]+/).filter(Boolean)};
+  let res;
+  if(f&&f.name.endsWith('.xlsx')){const fd=new FormData();fd.append('file',f);fd.append('params',JSON.stringify(params));
+    res=await fetch('/api/v1/jobs/upload',{method:'POST',body:fd});}
+  else{if(!$('genes').value.trim()){alert('Paste genes, choose a file, or load an example');return;}
+    res=await fetch('/api/v1/jobs',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({...params,text:$('genes').value,name:f?f.name.replace(/\.[^.]+$/,''):(EXNAME||'query')})});}
+  if(!res.ok){alert('Error: '+(await res.text()));return;}
+  const {job_id}=await res.json();
+  $('run').disabled=true;
+  $('main').innerHTML=`<div class="panel"><div class="panel-heading">Running…</div><div class="panel-body">
+    <div class="muted" id="stage">starting</div><div class="chips" id="chips"></div></div></div>`;
+  $('main').scrollIntoView({behavior:'smooth',block:'start'});
+  const es=new EventSource(`/api/v1/jobs/${job_id}/events`);
+  es.onmessage=async m=>{const e=JSON.parse(m.data);
+    if(e.type==='stage')$('stage').textContent=`${e.stage}${e.organism?' · '+e.organism+' · universe '+e.universe+' genes':''}${e.query?' · '+e.query:''} (${e.t}s)`;
+    if(e.type==='tool_done')$('chips').insertAdjacentHTML('beforeend',`<span class="chip ${e.status}" title="${esc(e.message)}">
+      ${esc(e.query)} · ${esc(e.tool)} · ${e.status} · ${e.runtime_s}s · ${e.n_significant} sig</span>`);
+    if(e.type==='finished'){es.close();$('run').disabled=false;
+      const job=await (await fetch(`/api/v1/jobs/${job_id}`)).json();
+      if(job.status==='done')render(job.result);else $('main').insertAdjacentHTML('beforeend',`<div class="alert alert-danger">${esc(job.error)}</div>`);}};
+}
+function table(rows,cols,badge){if(!rows||!rows.length)return '<p class="muted">No rows.</p>';
+  return '<div class="scroll"><table><thead><tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'</tr></thead><tbody>'+
+  rows.map(r=>'<tr>'+cols.map(c=>{const v=r[c];
+    if(c===badge){const t={ROBUST:1,SUPPORTED:2,'SINGLE-TOOL':3}[v]||0;return `<td><span class="badge b${t}">${esc(v)}</span></td>`}
+    if(c==='hit_genes'||c==='core_genes')return `<td class="genes">${esc(String(v||'').split(';').slice(0,12).join(', '))}</td>`;
+    if(c==='term_name'&&r.url)return `<td><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(v)}</a></td>`;
+    if(typeof v==='number')return `<td class="num">${c.includes('padj')?v.toPrecision(2):(Number.isInteger(v)?v:v.toFixed(1))}</td>`;
+    return `<td>${esc(v)}</td>`}).join('')+'</tr>').join('')+'</tbody></table></div>';}
+function render(R){
+  let h=`<div class="panel"><div class="panel-heading">Results</div><div class="panel-body">
+    <p class="muted" style="margin-top:0">organism ${esc(R.organism)} · universe ${R.universe_size} genes · total ${R.timings.total_s}s ·
+    <a href="${R.report}" target="_blank" class="btn btn-success btn-xs">Full HTML report</a>
+    <a href="${R.summary_txt}" target="_blank" class="btn btn-default btn-xs">summary.txt</a></p>`;
+  h+=R.warnings.map(w=>`<div class="alert alert-warning">${esc(w)}</div>`).join('');
+  h+='<ul class="nav-pills" style="margin-top:8px">'+R.queries.map((q,i)=>`<li><button onclick="tab(${i})">${esc(q.name)}</button></li>`).join('')+'</ul>';
+  R.queries.forEach((q,i)=>{h+=`<section class="q" id="q${i}" style="display:none">
+    ${q.warnings.map(w=>`<div class="alert alert-warning">${esc(w)}</div>`).join('')}
+    <div class="chips">${q.tools.map(t=>`<span class="chip ${t.status}" title="${esc(t.message)}">${esc(t.tool)} · ${t.status} · ${t.n_significant} sig</span>`).join('')}</div>
+    <h2>Consensus pathways</h2>${table(q.consensus,['rank','tier_label','term_name','database','consensus_score','tool_support','best_padj','hit_genes'],'tier_label')}
+    <div class="grid2">${q.figures.consensus_bar?`<img src="${q.figures.consensus_bar}">`:''}${q.figures.evidence_bubble?`<img src="${q.figures.evidence_bubble}">`:''}</div>
+    <h2>Themes</h2>${table(q.themes,['theme_rank','tier_label','theme_name','theme_score','n_terms','databases','core_genes'],'tier_label')}
+    ${q.figures.theme_network?`<p><img src="${q.figures.theme_network}"></p>`:''}
+    <h2>Key genes</h2><div class="grid2" style="margin-top:0">${q.figures.key_gene_bubble?`<img src="${q.figures.key_gene_bubble}">`:''}
+    ${q.figures.gene_theme?`<img src="${q.figures.gene_theme}">`:''}</div>
+    ${table(q.key_genes,['rank','gene','gene_score','n_themes','n_tools','why'])}
+    <p class="muted">All tables, per-tool figures and networks: <a href="${R.report}" target="_blank">report</a> ·
+    files under <code>${esc(q.folder)}</code></p></section>`;});
+  h+='</div></div>';
+  $('main').innerHTML=h;tab(0);}
+function tab(i){document.querySelectorAll('.q').forEach((e,j)=>e.style.display=i===j?'block':'none');
+  document.querySelectorAll('#main .nav-pills button').forEach((e,j)=>e.classList.toggle('active',i===j));}
+init();
+</script>
+</body>
+</html>

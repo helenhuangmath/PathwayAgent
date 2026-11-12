@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# OS/editor files
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# PathwayAgent generated or local-heavy artifacts (kept in ../large_data/ during development)
+results/
+library/
+large_data/
+# Browser-prototype databases (~23 MB) are symlinks into ../large_data/
+testing/browser_prototype/data
+testing/browser_prototype/data_source
+*.sqlite
+*.sqlite3
+*.rds
+
+# Test code and example inputs live under testing/.
+
+# R package/build artifacts
+*.Rcheck/
+*.tar.gz
+.Rproj.user/
