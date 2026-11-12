@@ -24,10 +24,11 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = ["pytest", "httpx", "build", "twine", "ruff"]
+docs = ["mkdocs-material>=9.5,<10"]
 
 [project.urls]
 Homepage = "https://github.com/helenhuangmath/PathwayAgent"
-Documentation = "https://github.com/helenhuangmath/PathwayAgent/blob/main/docs/PYTHON_API.md"
+Documentation = "https://helenhuangmath.github.io/PathwayAgent/"
 Issues = "https://github.com/helenhuangmath/PathwayAgent/issues"
 Source = "https://github.com/helenhuangmath/PathwayAgent"
 

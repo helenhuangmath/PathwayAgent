@@ -21,7 +21,7 @@ python -m pytest -m "not live"
 
 Library-dependent tests skip explicitly when a compiled mouse library is absent. A clean CI checkout
 therefore exercises the database-independent tests; full scientific validation requires building or
-providing the reference library. Use `-ra` to inspect skipped tests. The v0.1.0 release was checked
+providing the reference library. Use `-ra` to inspect skipped tests. The v1.0.1 release was checked
 locally with the mouse reference library, including the R agreement test.
 
 `package_smoke.py` independently creates synthetic genes and sets in a temporary folder and checks

@@ -1,0 +1,80 @@
+site_name: PathwayAgent
+site_description: Fast multi-tool pathway analysis with cross-tool consensus scoring
+site_author: Hua Huang
+site_url: https://helenhuangmath.github.io/PathwayAgent/
+repo_url: https://github.com/helenhuangmath/PathwayAgent
+repo_name: helenhuangmath/PathwayAgent
+edit_uri: ""
+copyright: Copyright &copy; 2026 Hua Huang. Released under the MIT License.
+
+docs_dir: docs
+# Pulls TUTORIAL.md and CHANGELOG.md from the repository root into the site at build time,
+# so each has a single source. See mkdocs_hooks.py.
+hooks:
+  - mkdocs_hooks.py
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - content.code.copy
+    - search.highlight
+
+nav:
+  - Introduction: index.md
+  - Installation: INSTALL.md
+  - Quick start: quickstart.md
+  - Tutorial: tutorial.md
+  - User guide:
+      - Inputs and command line: usage.md
+      - Tools and presets: tools.md
+      - Outputs and figures: outputs.md
+      - How the consensus works: consensus.md
+      - Web app and REST API: webapp.md
+  - Python:
+      - Python API: PYTHON_API.md
+      - Small worked example: WORKED_EXAMPLE.md
+  - About:
+      - Changelog: changelog.md
+      - Citation, license, contact: about.md
+
+# Maintainer notes: built and reachable by URL, but kept out of the sidebar.
+not_in_nav: |
+  RELEASING.md
+  REPOSITORY_HEALTH.md
+  releases/*
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.details
+
+extra_css:
+  - stylesheets/extra.css

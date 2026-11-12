@@ -1,8 +1,14 @@
 # PathwayAgent
 
+Current formal release: [v1.0.1](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1).
+Installable packages, a worked example, and checksums are attached to the release.
+
 Fast pathway analysis that runs several enrichment tools at once and combines them into a cross-tool
 consensus: robust themes, key genes, and figures ready for publication.
 A worked example on real data (three CD8 T cell gene modules, with Metascape) is in `TUTORIAL.md`.
+
+**Documentation: <https://helenhuangmath.github.io/PathwayAgent/>** (introduction, installation, tutorial,
+user guide and Python API).
 
 ## What it produces
 
@@ -179,8 +185,11 @@ See [testing/README.md](testing/README.md) for the folder guide; the active Pyth
   development the repository lives in `PathwayAgent/github_repo/` with the large library, results and build
   files in the sibling `PathwayAgent/large_data/`.
 - CI runs linting, package build checks and the offline test suite.
-- `CONTRIBUTING.md`, `CHANGELOG.md` and `docs/REPOSITORY_HEALTH.md` track the remaining work needed for a
-  stable public release.
+- The documentation site is built from `docs/` with MkDocs (`mkdocs.yml`) and deployed to GitHub Pages by
+  `.github/workflows/docs.yml`. Preview it locally with `pip install -e ".[docs]"` and `mkdocs serve`.
+  `TUTORIAL.md` and `CHANGELOG.md` are pulled into the site at build time, so edit them in place.
+- `CONTRIBUTING.md`, `CHANGELOG.md` and `docs/REPOSITORY_HEALTH.md` describe release procedures,
+  published changes, and ongoing maintenance.
 
 ## Citation
 

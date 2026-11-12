@@ -1,0 +1,11 @@
+/* Figures: centred, with a light frame so white-background plots read on the dark theme too. */
+.md-typeset img {
+  display: block;
+  margin: 0.6em auto;
+  background: #fff;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+}
+.md-typeset table:not([class]) { font-size: 0.72rem; }
+/* Two figures side by side in a table: let the columns share the width. */
+.md-typeset table:not([class]) td img { margin: 0; }

@@ -1,47 +1,34 @@
-# Repository Health Roadmap
+# Repository Health and Maintenance
 
-This file tracks the work needed to make PathwayAgent feel like a mature, reusable GitHub package.
+PathwayAgent [v1.0.1](https://github.com/helenhuangmath/PathwayAgent/releases/tag/v1.0.1)
+is the current formal release. It is published as a regular GitHub release, not a draft or prerelease.
+The tasks below track ongoing maintenance and do not change that release status.
 
-## Current State
+## Completed release work
 
-- Core package: implemented under `pathwayagent/`.
-- CLI and local server: implemented.
-- Offline tests: implemented and passing locally.
-- Documentation: README and tutorial are substantial.
-- Generated artifacts: currently present locally, but should stay out of Git.
+- Package, CLI, local web app, and REST API are published in the GitHub repository.
+- Package metadata, runtime version, citation, and current API documentation use version 1.0.1.
+- MIT license and citation metadata are included; repository links point to the actual project.
+- The release includes a wheel, source archive, worked-example outputs, and SHA-256 checksums.
+- The Python API is documented in [PYTHON_API.md](PYTHON_API.md).
+- A small executable example is documented in [WORKED_EXAMPLE.md](WORKED_EXAMPLE.md).
+- All 20 offline tests passed locally with the mouse reference library, including R agreement.
+- GitHub CI passed on Python 3.11 and 3.12 and verified the installed wheel on Linux.
+- A synthetic package smoke test checks enrichment, reports, API health, and bundled assets
+  without downloading reference data.
+- Generated libraries, result folders, virtual environments, and caches are excluded from Git.
 
-## Before Public GitHub Release
+## Ongoing maintenance
 
-- Initialize or restore a top-level Git repository.
-- ~~Choose and add a top-level open-source license.~~ Done: MIT (`LICENSE`), author and citation metadata added 2026-11-09.
-- ~~Replace placeholder GitHub URLs in `pyproject.toml`.~~ Done for v0.1.0: verified `helenhuangmath/PathwayAgent`.
-- ~~Keep `.venv/`, `library/`, and `results/` untracked.~~ Done 2026-11-09: large data moved to the sibling `large_data/` folder; the code finds it automatically.
-- Test code, inputs, and archived prototypes are grouped under `testing/`; the active Python tests are in `testing/unit/`, `testing/validation/`, and `testing/live/`.
-- ~~Decide whether `PeakAnnoAgent/` should move to a separate repository.~~ Done: it now lives beside this project.
-- ~~Add a small, stable test fixture for docs and CI.~~ Synthetic installed-package smoke test plus a packaged worked example added for v0.1.0.
-- Verify installation on additional clean operating systems; v0.1.0 wheel and source distribution are checked in fresh Python environments on macOS, with Linux wheel checks configured in CI.
+- Verify installation on additional operating systems and Python versions.
+- Exercise live external-service integrations and fresh reference-library downloads separately
+  from the offline suite; document the versions and dates used for each release.
+- Keep R/Bioconductor setup instructions current and consider providing a container image.
+- Extend reproducibility records for reference data and dependency versions.
+- Add a DOI to `CITATION.cff` if a release is archived on Zenodo.
+- Evaluate persistent job storage before offering the local web app as a shared hosted service.
 
-## Maturity Milestones
-
-### Alpha
-
-- Package installs with `pip install -e .`.
-- Offline tests pass.
-- README and tutorial explain normal use.
-- Generated data is not committed.
-
-### Beta
-
-- CI runs offline tests on pull requests.
-- Live tests are documented and optionally scheduled.
-- R dependencies are documented or containerized.
-- Large libraries are downloadable or generated reproducibly.
-- Example outputs are available as release artifacts.
-
-### Stable
-
-- Public API is documented in `docs/PYTHON_API.md` (versioned API reference).
-- Versioning follows semantic versioning.
-- Releases include changelog entries.
-- Citation metadata is complete (`CITATION.cff` added; add a DOI once archived on Zenodo).
-- Reproducibility story is clear for Python, R, and database versions.
+Reference-library-dependent tests skip explicitly when the compiled library is absent. CI's
+synthetic smoke test checks package operation; the full scientific validation suite still requires
+the reference library. See [testing/README.md](https://github.com/helenhuangmath/PathwayAgent/blob/main/testing/README.md) and
+[RELEASING.md](RELEASING.md) for verification instructions.
