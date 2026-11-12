@@ -5,6 +5,7 @@ cross-tool consensus: robust themes, key genes, and figures ready for publicatio
 
 [Get started](quickstart.md){ .md-button .md-button--primary }
 [Tutorial](tutorial.md){ .md-button }
+[Launch web app](launch.md){ .md-button }
 [GitHub](https://github.com/helenhuangmath/PathwayAgent){ .md-button }
 
 ## Introduction

@@ -105,3 +105,15 @@
 
 /* Two figures side by side in a table: let the columns share the width. */
 .md-typeset table:not([class]) td img { margin: 0; }
+
+/* Launch page: status line above the buttons. */
+.pa-launch { margin: 1.2em 0 1.6em; }
+.pa-status {
+  padding: 0.6em 0.9em;
+  border-left: 4px solid var(--md-default-fg-color--lighter);
+  background: var(--md-code-bg-color);
+  border-radius: 2px;
+}
+.pa-status.pa-up { border-left-color: #2e8b57; }
+.pa-status.pa-down { border-left-color: #c77c11; }
+.pa-launch button.md-button { cursor: pointer; font-family: inherit; }
